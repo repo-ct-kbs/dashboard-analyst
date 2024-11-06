@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Haris Hotel",
+        "check_in": "10:00",
+        "check_out": "10:00",
+    "rooms": [
+        {"room_type": "Family", "rooms": 30, "price": 1000000},
+        {"room_type": "Deluxe", "rooms": 20, "price": 1500000},
+        {"room_type": "Suite", "rooms": 15, "price": 2500000},
+        {"room_type": "Standard", "rooms": 45, "price": 500000}
+    ]
+    },
+    {
+        "name": "Cakra Hotel",
+        "check_in": "14:00",
+        "check_out": "12:00",
+        "rooms":  [
+            {"room_type": "Regular", "rooms": 25, "price": 1000000},
+            {"room_type": "Fancy", "rooms": 10, "price": 2000000},
+            {"room_type": "Presidential", "rooms": 5, "price": 3000000}
+        ]
+    },
+    {
+        "name": "Aston Hotel",
+        "check_in": "16:00",
+        "check_out": "11:00",
+        "rooms": [
+            {"room_type": "Standard", "rooms": 50, "price": 1500000},
+            {"room_type": "Double", "rooms": 20, "price": 1750000},
+            {"room_type": "Deluxe", "rooms": 10, "price": 2750000}
+        ]
+    }
+]
