@@ -12,6 +12,10 @@ transactions_df = df_transactions()
 rooms = df_hotels()
 rooms_df = rooms[0]
 
+hotel_names = ['All'] + [hotel['name'] for hotel in rooms[1]]
+selected_hotel = st.selectbox("Select a Hotel", hotel_names, key='Room Availability and Occupancy per Selected Date-selected_hotel')
+st.divider()
+
 def calculate_stay_days(check_in, check_out, start_range, end_range):
     check_in = max(check_in, start_range)
     check_out = min(check_out, end_range)
@@ -110,14 +114,10 @@ def get_last_year_range(selected_date):
 
 st.title('Occupancy rates (current, historical, and projected).')
 st.write('Menampilkan dalam bentuk grafik, persentase rata-rata kamar yang ditempati di setiap bulannya dalam rentang satu tahun, serta dalam bentuk card untuk persentase harian, mingguan, bulanan dan tahunan')
-hotel_names = ['All'] + [hotel['name'] for hotel in rooms[1]]
-selected_hotel = st.selectbox("Select a Hotel", hotel_names, key='Room Availability and Occupancy per Selected Date-selected_hotel')
 
-st.divider()
-
-st.title('Room Availability and Occupancy per Selected Date')
 selected_date = st.date_input("Select a Date", datetime.now())
 filter_selection = st.selectbox("Filter", ["Today", "This week", "Last 7 days", "Last week", "This month", "Last 30 days", "Last month", "This year", "Last 365 days", "Last year"])
+
 
 if filter_selection == "Today":
     today = selected_date
@@ -334,3 +334,66 @@ with option_col[1]:
                     title="Room Occupancy per Year")
 
 st.plotly_chart(fig)
+
+st.divider()
+
+st.title('Guest check-ins and check-outs.')
+st.write('Menampilkan dalam bentuk grafik jumlah guest check in dan check out di setiap harinya dalam rentang 1 bulan')
+
+filter_col = st.columns(2)
+with filter_col[0]:
+    selected_year = st.selectbox("Year", transactions_df['check_in_time'].dt.year.unique().tolist(), key='year_2')
+with filter_col[1]:
+    selected_month = st.selectbox("Month", ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], key='month_2')
+
+df = transactions_df
+df['check_in_time'] = pd.to_datetime(df['check_in_time'])
+df['check_out_time'] = pd.to_datetime(df['check_out_time'])
+
+month_num = list(calendar.month_name[1:]).index(selected_month) + 1
+df_filtered = df[(df['check_in_time'].dt.year == selected_year) & (df['check_in_time'].dt.month == month_num)]
+
+start_of_month = datetime(selected_year, month_num, 1)
+end_of_month = datetime(selected_year, month_num, calendar.monthrange(selected_year, month_num)[1])
+date_range = pd.date_range(start=start_of_month, end=end_of_month, freq='D')
+
+check_in_counts = df_filtered['check_in_time'].dt.floor('D').value_counts().reindex(date_range, fill_value=0)
+check_out_counts = df_filtered['check_out_time'].dt.floor('D').value_counts().reindex(date_range, fill_value=0)
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=check_in_counts.index,
+    y=check_in_counts.values,
+    name="Check-ins",
+    marker_color='blue'
+))
+
+fig.add_trace(go.Bar(
+    x=check_out_counts.index,
+    y=check_out_counts.values,
+    name="Check-outs",
+    marker_color='red'
+))
+
+fig.update_layout(
+    title=f"Daily Check-ins and Check-outs for {selected_month} {selected_year}",
+    xaxis_title="Date",
+    yaxis_title="Count",
+    xaxis=dict(
+        tickmode='array',
+        tickvals=date_range,
+        ticktext=[date.strftime('%d') for date in date_range]
+    ),
+    bargap=0.3,
+    bargroupgap=0,
+     legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="center",
+        x=0.5
+    )
+)
+st.plotly_chart(fig)
+st.divider()
