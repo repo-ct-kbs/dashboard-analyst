@@ -8,6 +8,8 @@ import plotly.graph_objects as go
 
 
 def one_b(transactions_df, rooms_df, selected_hotel):
+    st.title('Room availability')
+    st.write('Menampilkan dalam bentuk grafik jumlah ketersedian kamar di setiap harinya dalam rentang 1 bulan')
     filter_col = st.columns(2)
     with filter_col[0]:
         year_selection = st.selectbox("Year", transactions_df['check_in_time'].dt.year.unique().tolist(), key='year_2')
@@ -48,7 +50,7 @@ def one_b(transactions_df, rooms_df, selected_hotel):
 
     full_day_occupancy_df['remaining_rooms'] = full_day_occupancy_df['room_available'] - full_day_occupancy_df['occupancy_count']
 
-    fig = px.bar(full_day_occupancy_df,
+    fig = px.line(full_day_occupancy_df,
                 x='day',
                 y='remaining_rooms',
                 color='hotel_name',
@@ -60,11 +62,12 @@ def one_b(transactions_df, rooms_df, selected_hotel):
     fig.update_layout(
     
     legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="center",
-        x=0.5
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5
+        )
     )
-)
     st.plotly_chart(fig)
+    st.divider()
