@@ -65,7 +65,7 @@ for i in range(num_transactions):
             daily_bookings[hotel][date_str][room_info["room_type"]] += 1
             break
 
-    night_stay = random.randint(1, 10)
+    night_stay = random.randint(1, 5)
     
     booking_time = date - timedelta(days=random.randint(1, 30))
     booking_time = booking_time.replace(hour=random.randint(0, 23), minute=random.randint(0, 59))
@@ -94,7 +94,9 @@ for i in range(num_transactions):
         "adults": random.randint(1, 4),
         "children": random.randint(0, 2),
         "night_stay": night_stay,
-        "guest_identity": guest_identity
+        "guest_identity": guest_identity,
+        "check_in_schedule": check_in_time.date(),
+        "check_out_schedule": check_in_time.date() + timedelta(days=night_stay)
     }
 
     transactions.append(transaction)
