@@ -312,7 +312,7 @@ def one_a_b(transactions_df):
                                                                     ordered=True)
             month_occupancy_counts = month_occupancy_counts.sort_values('month_name')
 
-            fig = px.liner(month_occupancy_counts, 
+            fig = px.line(month_occupancy_counts, 
                         x='month_name', 
                         y='occupancy_count', 
                         labels={'month_name': 'Month', 'occupancy_count': 'Room Occupancy'},
