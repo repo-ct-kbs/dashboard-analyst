@@ -50,12 +50,17 @@ guest_last_checkout = {}
 num_transactions = 100000
 transactions = []
 
+year_started = 2018
+year_end = 2025
+night_stay_max = 7
+break_time_per_customer = 21
+
 for i in range(num_transactions):
     hotel = random.choice(list(hotels.keys()))
     room_info = random.choice(hotels[hotel])
 
     while True:
-        date = datetime(2020, 1, 1) + timedelta(days=random.randint(0, (datetime(2024, 12, 31) - datetime(2020, 1, 1)).days))
+        date = datetime(year_started, 1, 1) + timedelta(days=random.randint(0, (datetime(year_end, 3, 31) - datetime(year_started, 1, 1)).days))
         date_str = date.strftime('%Y-%m-%d')
 
         if date_str not in daily_bookings[hotel]:
@@ -65,7 +70,7 @@ for i in range(num_transactions):
             daily_bookings[hotel][date_str][room_info["room_type"]] += 1
             break
 
-    night_stay = random.randint(1, 5)
+    night_stay = random.randint(1, night_stay_max)
     
     booking_time = date - timedelta(days=random.randint(1, 30))
     booking_time = booking_time.replace(hour=random.randint(0, 23), minute=random.randint(0, 59))
@@ -78,7 +83,7 @@ for i in range(num_transactions):
         guest_identity = extract_guest_info(random.choice(guest_data))
         guest_id = guest_identity['identity_number']
         
-        if guest_id not in guest_last_checkout or (guest_last_checkout[guest_id] + timedelta(days=21)) <= check_in_time:
+        if guest_id not in guest_last_checkout or (guest_last_checkout[guest_id] + timedelta(days=break_time_per_customer)) <= check_in_time:
             guest_last_checkout[guest_id] = check_out_time
             break
 
@@ -105,6 +110,4 @@ for i in range(num_transactions):
     guest_df = pd.json_normalize(df['guest_identity'])
     df = pd.concat([df.drop(columns=['guest_identity']), guest_df], axis=1)
 
-    df.to_json("hotel_booking_history-2.json", orient="records", date_format="iso")
-
-    print("Dataset created and saved as 'hotel_booking_history.json'", i)
+    df.to_json("hotel_booking_history-4.json", orient="records", date_format="iso")

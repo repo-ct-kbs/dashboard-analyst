@@ -6,6 +6,8 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+from config import fixed_range
+
 def calculate_occupancy(selected_date, start_of_day, end_of_day, days_in_range, selected_hotel, transactions_df, rooms_df):
     selected_bookings = transactions_df[
         (transactions_df['check_in_time'].dt.date <= end_of_day) &
@@ -96,7 +98,7 @@ def one_a(selected_hotel, transactions_df, rooms_df):
     st.title('Occupancy rates (current, historical, and projected).')
     st.write('Menampilkan dalam bentuk grafik, persentase rata-rata kamar yang ditempati di setiap bulannya dalam rentang satu tahun, serta dalam bentuk card untuk persentase harian, mingguan, bulanan dan tahunan')
 
-    selected_date = st.date_input("Select a Date", datetime.now())
+    selected_date = st.date_input("Select a Date", fixed_range)
     filter_selection = st.selectbox("Filter", ["Today", "This week", "Last 7 days", "Last week", "This month", "Last 30 days", "Last month", "This year", "Last 365 days", "Last year"])
 
 
@@ -249,8 +251,8 @@ def one_a_b(transactions_df):
                 check_in = row['check_in_time'].date()
                 check_out = row['check_out_time'].date()
 
-                start_of_day = pd.to_datetime(f"{year_selection}-{month_selection}-01")  # Start of the month
-                end_of_day = pd.to_datetime(f"{year_selection}-{month_selection}-01") + pd.DateOffset(months=1) - pd.DateOffset(days=1)  # End of the month
+                start_of_day = pd.to_datetime(f"{year_selection}-{month_selection}-01")
+                end_of_day = pd.to_datetime(f"{year_selection}-{month_selection}-01") + pd.DateOffset(months=1) - pd.DateOffset(days=1)
                 
                 total_days_for_occupancy = 0
 

@@ -60,7 +60,6 @@ def one_b(transactions_df, rooms_df, selected_hotel):
 
     fig.update_xaxes(tickmode='array', tickvals=full_day_occupancy_df['day'], ticktext=[str(d.day) for d in full_day_occupancy_df['day']])
     fig.update_layout(
-    
     legend=dict(
             orientation="h",
             yanchor="bottom",

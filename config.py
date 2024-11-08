@@ -6,6 +6,7 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 
+fixed_range = datetime.datetime(day=31, month=12, year=2024)
 
 def render_image(title, fig):
     st.plotly_chart(fig)
@@ -14,7 +15,7 @@ def render_image(title, fig):
 def df_transactions():
     st.title('Pilih Rentang Tanggal')
     
-    df = pd.read_json('hotel_booking_history-2.json')
+    df = pd.read_json('hotel_booking_history-4.json')
     df['booking_time'] = pd.to_datetime(df['booking_time'])
     df['check_in_time'] = pd.to_datetime(df['check_in_time'])
     df['check_out_time'] = pd.to_datetime(df['check_out_time'])
@@ -34,8 +35,8 @@ def df_hotels():
         return [rooms_df, datas]
 
 def daterange():
-    start_year = 2020
-    today = datetime.datetime.now()
+    start_year = 2018
+    today = fixed_range
     current_year = today.year
 
     col = st.columns(2)

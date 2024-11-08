@@ -5,6 +5,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from config import df_hotels, df_transactions
+from pages.operational_overview.two_a import two_a
+from pages.operational_overview.two_b import two_b
+from pages.operational_overview.two_c import two_c
 
 
 transactions_df = df_transactions()
@@ -15,14 +18,9 @@ hotel_names = ['All'] + [hotel['name'] for hotel in rooms[1]]
 selected_hotel = st.selectbox("Select a Hotel", hotel_names, key='Room Availability and Occupancy per Selected Date-selected_hotel')
 st.divider()
 
-st.title('Guest reservations (current and upcoming).')
-st.write('Menampilkan dalam bentuk grafik jumlah reservasi yang terjadi di setiap harinya dalam rentang 1 bulan')
-st.divider()
 
-st.title('Average Length of Stay (ALOS).')
-st.write('Menampilkan dalam bentuk grafik rata-rata lama tamu menginap per bulannya dalam rentang 1 tahun')
-st.divider()
+two_a(transactions_df, rooms_df, selected_hotel)
 
-st.title('Daily revenue and ADR (Average Daily Rate).')
-st.write('Menampilkan dalam bentuk grafik jumlah pendapatan dan  rata-rata pendapatan dari seluruh kamar yang terisi pada hari berjalan (dihitung dari yang checkin pada hari tersebut)')
-st.divider()
+two_b(transactions_df, rooms_df, selected_hotel)
+
+two_c(transactions_df, rooms_df, selected_hotel)
