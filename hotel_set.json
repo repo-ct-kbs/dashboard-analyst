@@ -18,7 +18,7 @@
                         "rooms": 5
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 5
                     }
                 ]
@@ -37,7 +37,7 @@
                         "rooms": 10
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 0
                     }
                 ]
@@ -56,7 +56,7 @@
                         "rooms": 5
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 3
                     }
                 ]
@@ -75,7 +75,7 @@
                         "rooms": 2
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 3
                     }
                 ]
@@ -123,7 +123,7 @@
                         "rooms": 7
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms":1
                     }
                 ]
@@ -142,7 +142,7 @@
                         "rooms": 5
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 5
                     }
                 ]
@@ -161,7 +161,7 @@
                         "rooms": 2
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 2
                     }
                 ]
@@ -209,7 +209,7 @@
                         "rooms": 10
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 20
                     }
                 ]
@@ -228,7 +228,7 @@
                         "rooms": 10
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 30
                     }
                 ]
@@ -247,7 +247,7 @@
                         "rooms": 4
                     },
                     {
-                        "status": "On-cleaning",
+                        "status": "In Progress Cleaning",
                         "rooms": 1
                     }
                 ]
