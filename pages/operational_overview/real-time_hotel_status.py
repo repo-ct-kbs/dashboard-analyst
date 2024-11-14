@@ -16,7 +16,7 @@ rooms = df_hotels()
 rooms_df = rooms[0]
 
 hotel_names = ['All'] + [hotel['name'] for hotel in rooms[1]]
-selected_hotel = st.selectbox("Select a Hotel", hotel_names, key='Room Availability and Occupancy per Selected Date-selected_hotel')
+selected_hotel = st.selectbox("Select a Hotel", hotel_names, key='')
 st.divider()
 
 def calculate_stay_days(check_in, check_out, start_range, end_range):
