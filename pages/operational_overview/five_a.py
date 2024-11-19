@@ -5,77 +5,50 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly_calplot import calplot
 
 
-def five_a(transactions_df, rooms_df, selected_hotel):
+def five_a(df, rooms, selected_hotel):
     st.title('Room assignments')
     st.write('Melacak penugasan kamar yang sesuai dengan preferensi tamu, memastikan alokasi kamar yang optimal.\n\nRekomendasi Visualisasi: \nGrid view atau gantt chart untuk kamar yang sudah ditempati atau tersedia, serta pie chart untuk tipe kamar yang paling banyak dipesan. Menunjukkan room assignments berdasarkan tipe kamar dan tanggal.\nCalendar Heatmap: Untuk melihat pattern okupansi kamar per hari dalam sebulan.')
 
-    assignments_data = pd.DataFrame([
-        {"Room Type": "Deluxe", "Start": "2024-11-01", "End": "2024-11-05", "Guest": "Alice"},
-        {"Room Type": "Suite", "Start": "2024-11-03", "End": "2024-11-07", "Guest": "Bob"},
-        {"Room Type": "Standard", "Start": "2024-11-04", "End": "2024-11-06", "Guest": "Charlie"},
-        {"Room Type": "Deluxe", "Start": "2024-11-08", "End": "2024-11-10", "Guest": "David"},
-        {"Room Type": "Family", "Start": "2024-11-09", "End": "2024-11-12", "Guest": "Eve"}
-    ])
+    df['check_in_schedule'] = pd.to_datetime(df['check_in_schedule'])
 
-    bookings_data = pd.DataFrame([
-        {"Room Type": "Deluxe", "Count": 15},
-        {"Room Type": "Suite", "Count": 10},
-        {"Room Type": "Standard", "Count": 8},
-        {"Room Type": "Family", "Count": 12}
-    ])
+    top_col1, top_col2 = st.columns(2)
+    bottom_col1, bottom_col2 = st.columns(2)
 
-    dates = pd.date_range("2024-11-01", "2024-11-30")
-    occupancy_data = pd.DataFrame({
-        "Date": dates,
-        "Occupancy": [50, 45, 60, 55, 70, 40, 80, 65, 60, 75, 55, 50, 45, 55, 65, 70, 85, 60, 55, 50, 60, 75, 85, 90, 70, 65, 50, 60, 55, 70]
-    })
+    hotel_filter = top_col1.multiselect("Hotel Name", df['hotel_name'].unique().tolist(), default=df['hotel_name'].unique().tolist())
+    room_filter = top_col2.multiselect("Room Type", df['room_type'].unique().tolist(), default=df['room_type'].unique().tolist())
+    year_filter = bottom_col1.multiselect("Year", sorted(df['check_in_schedule'].dt.year.unique().tolist()), default=sorted(df['check_in_schedule'].dt.year.unique().tolist()))
+    month_filter = bottom_col2.multiselect("Month", list(range(1, 13)), default=list(range(1, 13)))
 
-    assignments_data["Start"] = pd.to_datetime(assignments_data["Start"])
-    assignments_data["End"] = pd.to_datetime(assignments_data["End"])
+    filtered_df = df.copy()
 
-    fig_gantt = px.timeline(assignments_data, x_start="Start", x_end="End", y="Room Type", color="Room Type", title="Room Assignments Gantt Chart")
-    fig_gantt.update_yaxes(autorange="reversed")
-    st.plotly_chart(fig_gantt)
+    if hotel_filter:
+        filtered_df = filtered_df[filtered_df['hotel_name'].isin(hotel_filter)]
 
-    fig_pie = px.pie(bookings_data, names="Room Type", values="Count", title="Most Booked Room Types")
-    st.plotly_chart(fig_pie)
+    if room_filter:
+        filtered_df = filtered_df[filtered_df['room_type'].isin(room_filter)]
 
-    occupancy_data['Weekday'] = occupancy_data['Date'].dt.day_name()
-    occupancy_data['Week'] = occupancy_data['Date'].dt.isocalendar().week
+    if year_filter:
+        filtered_df = filtered_df[filtered_df['check_in_schedule'].dt.year.isin(year_filter)]
 
-    heatmap_data = occupancy_data.pivot_table(values="Occupancy", index="Week", columns="Weekday")
+    if month_filter:
+        filtered_df = filtered_df[filtered_df['check_in_schedule'].dt.month.isin(month_filter)]
 
-    heatmap_data = heatmap_data[["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]]
+    daily_data = filtered_df.groupby('check_in_schedule').size().reset_index(name='occupancy')
 
-    fig_heatmap = go.Figure(data=go.Heatmap(
-        z=heatmap_data.values,
-        x=heatmap_data.columns,
-        y=heatmap_data.index,
-        colorscale="Viridis",
-        colorbar_title="Occupancy"
-    ))
 
-    fig_heatmap.update_layout(
-        title="Room Occupancy Calendar Heatmap",
-        xaxis_title="Day of the Week",
-        yaxis_title="Week Number"
+    fig = calplot(
+        daily_data,
+        x='check_in_schedule',
+        y='occupancy',
+        dark_theme=False,
+        text="occupancy",
+        years_title=True,
     )
 
-    fig_heatmap = go.Figure(data=go.Heatmap(
-        z=heatmap_data.values,
-        x=["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        y=heatmap_data.index,
-        colorscale="Viridis",
-    ))
+    st.plotly_chart(fig)
 
-    fig_heatmap.update_layout(
-        title="Room Occupancy Calendar Heatmap",
-        xaxis_title="Day of the Week",
-        yaxis_title="Week Number"
-    )
-
-    st.plotly_chart(fig_heatmap)
 
     st.divider()
