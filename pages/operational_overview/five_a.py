@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly_calplot import calplot
+from plotly_calplot import calplot, month_calplot
 
 
 def five_a(df, rooms, selected_hotel):
@@ -46,6 +46,24 @@ def five_a(df, rooms, selected_hotel):
         dark_theme=False,
         text="occupancy",
         years_title=True,
+        month_lines_width=1.5,
+        month_lines_color='red',
+        gap=2,
+        space_between_plots=0.08,
+        showscale=True,
+        title="Each Week"
+    )
+
+    st.plotly_chart(fig)
+
+    fig = month_calplot(
+        daily_data,
+        x='check_in_schedule',
+        y='occupancy',
+        dark_theme=False,
+        gap=2,
+        showscale=True,
+        title="Each Month"
     )
 
     st.plotly_chart(fig)

@@ -13,7 +13,7 @@ transactions_df = df_transactions()
 rooms = df_hotels()
 rooms_df = rooms[0]
 
-hotel_names = ['All'] + [hotel['name'] for hotel in rooms[1]]
+hotel_names = ['All']
 selected_hotel = st.selectbox("Select a Hotel", hotel_names, key='')
 st.divider()
 
