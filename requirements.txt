@@ -3,3 +3,4 @@ plotly
 streamlit
 requests
 plotly-calplot
+streamlit-calendar
