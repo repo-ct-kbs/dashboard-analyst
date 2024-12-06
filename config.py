@@ -7,24 +7,39 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 fixed_range = datetime.datetime(day=31, month=12, year=2024)
+selected_hotel = 'All'
 
 def render_image(title, fig):
     st.plotly_chart(fig)
 
 
 def df_transactions():
-    st.title('Pilih Rentang Tanggal')
+    global selected_hotel
+    rooms = df_hotels()
+    rooms_df = rooms[0]
+    hotel_df = rooms[1]
     
     df = pd.read_json('hotel_booking_history-4.json')
+
+    hotel_options = ["All"] + [hotel['name'] for hotel in hotel_df]
+    selected_hotel = st.selectbox("Select Hotel", hotel_options)
+
     df['booking_time'] = pd.to_datetime(df['booking_time'])
     df['check_in_time'] = pd.to_datetime(df['check_in_time'])
     df['check_out_time'] = pd.to_datetime(df['check_out_time'])
+    df['check_in_schedule'] = pd.to_datetime(df['check_in_schedule'])
+    df['check_out_schedule'] = pd.to_datetime(df['check_out_schedule'])
 
-    start_date, end_date = daterange()
-    df = df[(df['booking_time'] >= pd.Timestamp(start_date)) & (df['booking_time'] <= pd.Timestamp(end_date))]
-    return df
+    if selected_hotel == "All":
+        df = df
+    else:
+        df = df[df['hotel_name'] == selected_hotel]
+
+    # df = df[(df['booking_time'] >= pd.Timestamp(start_date)) & (df['booking_time'] <= pd.Timestamp(end_date))]
+    return [df, selected_hotel]
 
 def df_hotels():
+    global selected_hotel
     with open('hotel_set.json', 'r') as file:
         datas = json.load(file)
     
@@ -32,7 +47,13 @@ def df_hotels():
             {"hotel_name": hotel["name"], "room_type": room["room_type"], "room_available": room["rooms"]}
             for hotel in datas for room in hotel["rooms"]
         ])
-        return [rooms_df, datas]
+
+        if selected_hotel == 'All':
+            return [rooms_df, datas]
+        else:
+            rooms_df = rooms_df[rooms_df['hotel_name'] == selected_hotel]
+            datas = datas
+            return [rooms_df, datas]
 
 def daterange():
     start_year = 2018

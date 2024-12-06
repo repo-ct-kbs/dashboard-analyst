@@ -1,28 +1,22 @@
-import calendar
-from datetime import datetime, timedelta
-import numpy as np
+import random
 import pandas as pd
-import streamlit as st
-import plotly.express as px
 import plotly.graph_objects as go
+import plotly.express as px
+import streamlit as st
+from datetime import datetime, timedelta
 from plotly_calplot import calplot, month_calplot
 
 
-def five_a(df, rooms, selected_hotel):
-    st.title('Room assignments')
-    st.write('Melacak penugasan kamar yang sesuai dengan preferensi tamu, memastikan alokasi kamar yang optimal.\n\nRekomendasi Visualisasi: \nGrid view atau gantt chart untuk kamar yang sudah ditempati atau tersedia, serta pie chart untuk tipe kamar yang paling banyak dipesan. Menunjukkan room assignments berdasarkan tipe kamar dan tanggal.\nCalendar Heatmap: Untuk melihat pattern okupansi kamar per hari dalam sebulan.')
-
-    df['check_in_schedule'] = pd.to_datetime(df['check_in_schedule'])
-
+def gm_014(transactions_df, rooms_df, hotel_df, selected_hotel):
     top_col1, top_col2 = st.columns(2)
     bottom_col1, bottom_col2 = st.columns(2)
 
-    hotel_filter = top_col1.multiselect("Hotel Name", df['hotel_name'].unique().tolist(), default=df['hotel_name'].unique().tolist())
-    room_filter = top_col2.multiselect("Room Type", df['room_type'].unique().tolist(), default=df['room_type'].unique().tolist())
-    year_filter = bottom_col1.multiselect("Year", sorted(df['check_in_schedule'].dt.year.unique().tolist()), default=sorted(df['check_in_schedule'].dt.year.unique().tolist()))
+    hotel_filter = top_col1.multiselect("Hotel Name", transactions_df['hotel_name'].unique().tolist(), default=transactions_df['hotel_name'].unique().tolist())
+    room_filter = top_col2.multiselect("Room Type", transactions_df['room_type'].unique().tolist(), default=transactions_df['room_type'].unique().tolist())
+    year_filter = bottom_col1.multiselect("Year", sorted(transactions_df['check_in_schedule'].dt.year.unique().tolist()), default=sorted(transactions_df['check_in_schedule'].dt.year.unique().tolist()))
     month_filter = bottom_col2.multiselect("Month", list(range(1, 13)), default=list(range(1, 13)))
 
-    filtered_df = df.copy()
+    filtered_df = transactions_df.copy()
 
     if hotel_filter:
         filtered_df = filtered_df[filtered_df['hotel_name'].isin(hotel_filter)]

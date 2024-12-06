@@ -1,16 +1,12 @@
-import calendar
-from datetime import datetime, timedelta
-import numpy as np
+import random
 import pandas as pd
-import streamlit as st
-import plotly.express as px
 import plotly.graph_objects as go
+import plotly.express as px
+import streamlit as st
+from datetime import datetime, timedelta
 
 
-def three_b(transactions_df, rooms_df, selected_hotel):
-    st.title('Maintenance requests and their statuses.')
-    st.write('Menampilkan dalam bentuk card, jumlah request maintenance dan jumlah di setiap status maintenancenya serta dalam bentuk tabel untuk detail maintenance')
-
+def gm_009(transactions_df, rooms_df, hotel_df, selected_hotel):
     maintenance_data = pd.DataFrame({
         'id': [1, 2, 3, 4, 5, 6],
         'request_time': ['2024-11-01 09:00', '2024-11-01 11:30', '2024-11-02 14:00', '2024-11-03 10:15', '2024-11-03 15:45', '2024-11-04 12:00'],
@@ -29,8 +25,3 @@ def three_b(transactions_df, rooms_df, selected_hotel):
     col2.metric("Pending", status_counts.get("Pending", 0))
     col3.metric("In Progress", status_counts.get("In Progress", 0))
     col4.metric("Completed", status_counts.get("Completed", 0))
-
-    st.write("Maintenance Details")
-    st.dataframe(maintenance_data)
-
-    st.divider()
