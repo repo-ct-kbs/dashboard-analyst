@@ -18,7 +18,7 @@ def five_b(transactions_df, rooms_df, selected_hotel):
         }
         .fc-event-time {
             font-style: italic;
-        }
+        }]]]]]]]]]]]]]]]]]
         .fc-event-title {
             font-weight: 700;
         }
@@ -28,6 +28,6 @@ def five_b(transactions_df, rooms_df, selected_hotel):
     """
 
     calendar = st_calendar(events=calendar_events,  custom_css=custom_css)
-    st.write(calendar)
+    # st.write(calendar)
 
     st.divider()
