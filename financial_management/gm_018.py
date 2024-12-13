@@ -33,12 +33,13 @@ def plot_gauge_chart(current_revpar, target_revpar):
         delta={'reference': target_revpar, 'position': "top"},
         gauge={
             'axis': {'range': [0, target_revpar * 1.5]},
-            'bar': {'color': "green"},
+            'bar': {'color': "black"},
             'steps': [
-                {'range': [0, target_revpar * 0.5], 'color': "lightgray"},
-                {'range': [target_revpar * 0.5, target_revpar], 'color': "yellow"}
+                {'range': [0, target_revpar * 0.5], 'color': "red"},
+                {'range': [target_revpar * 0.5, target_revpar], 'color': "yellow"},
+                {'range': [target_revpar, target_revpar + target_revpar], 'color': "lightgreen"}
             ],
-            'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': target_revpar}
+            # 'threshold': {'line': {'color': "black", 'width': 4}, 'thickness': 0.75, 'value': target_revpar}
         },
         title={'text': "Current RevPAR"}
     ))
@@ -62,7 +63,20 @@ def plot_bar_chart(revpar_data, period_name):
     return fig
 
 def gm_018(transactions_df, rooms_df, hotel_df, selected_hotel):
+    # room_types = transactions_df[transactions_df['']]
+    # st.write(transactions_df)
+    # st.write(hotel_df)
     
+    # if selected_hotel == 'All':
+    #     hotel_df = hotel_df
+    # else:
+        # hotel_df = hotel_df.where((x['name']) == selected_hotel)
+        # hotel_df = []
+        # for i in hotel_df:
+        #     if i['name'] == selected_hotel:
+        #         hotel_df.append(i)
+    
+    # st.write(hotel_df)
 
     room_types = ['All'] + [room['room_type'] for hotel in hotel_df for room in hotel['rooms']]
     selected_room_type = st.selectbox("Select Room Type", room_types)
@@ -75,7 +89,7 @@ def gm_018(transactions_df, rooms_df, hotel_df, selected_hotel):
     monthly_revpar = calculate_revpar(filtered_transaction_df, hotel_df, period='month')
 
     current_revpar = monthly_revpar['revpar'].iloc[-1]
-    target_revpar = 500000
+    target_revpar = 5000000
 
     st.write("### Current RevPAR")
     gauge_fig = plot_gauge_chart(current_revpar, target_revpar)
