@@ -21,8 +21,8 @@ def df_transactions():
     
     df = pd.read_json('hotel_booking_history-4.json')
 
-    hotel_options = ["All"] + [hotel['name'] for hotel in hotel_df]
-    selected_hotel = st.selectbox("Select Hotel", hotel_options)
+    # hotel_options = ["All"] + [hotel['name'] for hotel in hotel_df]
+    # selected_hotel = st.selectbox("Select Hotel", hotel_options)
 
     df['booking_time'] = pd.to_datetime(df['booking_time'])
     df['check_in_time'] = pd.to_datetime(df['check_in_time'])
@@ -30,10 +30,11 @@ def df_transactions():
     df['check_in_schedule'] = pd.to_datetime(df['check_in_schedule'])
     df['check_out_schedule'] = pd.to_datetime(df['check_out_schedule'])
 
-    if selected_hotel == "All":
-        df = df
-    else:
-        df = df[df['hotel_name'] == selected_hotel]
+    # if selected_hotel == "All":
+    #     df = df
+    # else:
+    #     df = df[df['hotel_name'] == selected_hotel]
+    df = df[df['hotel_name'] == "Haris Hotel"]
 
     # df = df[(df['booking_time'] >= pd.Timestamp(start_date)) & (df['booking_time'] <= pd.Timestamp(end_date))]
     return [df, selected_hotel]
