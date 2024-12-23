@@ -1,0 +1,271 @@
+[
+    {
+        "name": "Haris Hotel",
+        "check_in": "10:00",
+        "check_out": "10:00",
+        "rooms": [
+            {
+                "room_type": "Family",
+                "rooms": 30,
+                "price": 1000000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 20
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 5
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 5
+                    }
+                ]
+            },
+            {
+                "room_type": "Deluxe",
+                "rooms": 20,
+                "price": 1500000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 20
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 10
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 0
+                    }
+                ]
+            },
+            {
+                "room_type": "Suite",
+                "rooms": 15,
+                "price": 2500000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 7
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 5
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 3
+                    }
+                ]
+            },
+            {
+                "room_type": "Standard",
+                "rooms": 45,
+                "price": 500000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 40
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 2
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 3
+                    }
+                ]
+            }
+        ],
+        "add_ons": [
+            {
+                "name": "Dinner per Pax",
+                "price": 250000
+            },
+            {
+                "name": "Private Pool Package (2 person)",
+                "price": 450000
+            },
+            {
+                "name": "Party Club per Pax",
+                "price": 300000
+            },
+            {
+                "name": "Laundry per Kg",
+                "price": 50000
+            },
+            {
+                "name": "Extra Towel",
+                "price": 20000
+            }
+        ]
+    },
+    {
+        "name": "Cakra Hotel",
+        "check_in": "14:00",
+        "check_out": "12:00",
+        "rooms": [
+            {
+                "room_type": "Regular",
+                "rooms": 25,
+                "price": 1000000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 17
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 7
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms":1
+                    }
+                ]
+            },
+            {
+                "room_type": "Fancy",
+                "rooms": 10,
+                "price": 2000000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 0
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 5
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 5
+                    }
+                ]
+            },
+            {
+                "room_type": "Presidential",
+                "rooms": 5,
+                "price": 3000000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 1
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 2
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 2
+                    }
+                ]
+            }
+        ],
+        "add_ons": [
+            {
+                "name": "Dinner Package (2 person)",
+                "price": 200000
+            },
+            {
+                "name": "Pool Access per Pax",
+                "price": 75000
+            },
+            {
+                "name": "Laundry per Room",
+                "price": 50000
+            },
+            {
+                "name": "Breakfast per Person",
+                "price": 100000
+            },
+            {
+                "name": "Breakfast Package (2 person)",
+                "price": 150000
+            }
+        ]
+    },
+    {
+        "name": "Aston Hotel",
+        "check_in": "16:00",
+        "check_out": "11:00",
+        "rooms": [
+            {
+                "room_type": "Standard",
+                "rooms": 50,
+                "price": 1500000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 20
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 10
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 20
+                    }
+                ]
+            },
+            {
+                "room_type": "Double",
+                "rooms": 20,
+                "price": 1750000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 0
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 10
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 30
+                    }
+                ]
+            },
+            {
+                "room_type": "Deluxe",
+                "rooms": 10,
+                "price": 2750000,
+                "status": [
+                    {
+                        "status": "Cleaned",
+                        "rooms": 5
+                    },
+                    {
+                        "status": "Dirty",
+                        "rooms": 4
+                    },
+                    {
+                        "status": "In Progress Cleaning",
+                        "rooms": 1
+                    }
+                ]
+            }
+        ],
+        "add_ons": [
+            {
+                "name": "Dinner + Breakfast Bundle per Pax",
+                "price": 200000
+            },
+            {
+                "name": "Dinner per Pax",
+                "price": 150000
+            },
+            {
+                "name": "Breakfast per Pax",
+                "price": 150000
+            }
+        ]
+    }
+]
