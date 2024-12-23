@@ -49,12 +49,16 @@ def df_hotels():
             for hotel in datas for room in hotel["rooms"]
         ])
 
-        if selected_hotel == 'All':
-            return [rooms_df, datas]
-        else:
-            rooms_df = rooms_df[rooms_df['hotel_name'] == selected_hotel]
-            datas = datas
-            return [rooms_df, datas]
+        # if selected_hotel == 'All':
+        #     return [rooms_df, datas]
+        # else:
+        #     rooms_df = rooms_df[rooms_df['hotel_name'] == selected_hotel]
+        #     datas = datas
+        #     return [rooms_df, datas]
+    
+    rooms_df = rooms_df[rooms_df['hotel_name'] == "Haris Hotel"]
+    datas = datas
+    return [rooms_df, datas]
 
 def daterange():
     start_year = 2018
